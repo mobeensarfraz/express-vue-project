@@ -1,6 +1,7 @@
 import express from 'express';
 import user from './router/user.js';
 import mongoose from 'mongoose';
+import cors from 'cors'
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://mobeensarfrazahmad:YMeLluYFJYhA7RH9@cluster0.yku5r.mongodb.net/shop', {
   useNewUrlParser: true,
@@ -17,6 +18,7 @@ const app= express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
  
+app.use(cors())
 
 
 //app.use (express.static(path.join(__dirname,'public')));

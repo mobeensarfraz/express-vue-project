@@ -20,7 +20,7 @@ export const postUserBynameorpassword=async (req, res) => {
      delete user._id;
    });  
     console.log(req.body)
-    res.json(user);
+    res.json(user[0]);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
