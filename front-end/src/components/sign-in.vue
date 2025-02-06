@@ -2,10 +2,14 @@
 import backgroundImage from '@/assets/img/background.jpg';
 import { ref } from "vue";
 import { RouterLink } from 'vue-router';
+import { useUserStore } from '@/stores/userstore';
+import router from '@/router';
+
+const userStore = useUserStore();
 
 const username = ref("");
 const password = ref("");
-const post = ref(null);
+const errorMessage = ref(null);
 
 async function fetchPost() {
   try {
@@ -20,11 +24,23 @@ async function fetchPost() {
 
     })
 });
-    post.value = await response.json();
+const data = await response.json();
+
+    if (response.ok) {
+      userStore.setUser(data);
+      console.log("User stored in Pinia:", data);
+      router.push("/home");
+
+    } else {
+      errorMessage.value = data.message || "Login failed!";
+    }
   } catch (error) {
     console.error('Error:', error);
+    errorMessage.value = "Network error. Please try again.";
   }
 }
+
+
 
 </script>
 <template>

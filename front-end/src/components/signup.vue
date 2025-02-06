@@ -2,9 +2,31 @@
 import backgroundImage from '@/assets/img/background.jpg';
 import { ref } from "vue";
 import { RouterLink } from 'vue-router';
+import router from '@/router';
 const username = ref("");
 const email = ref("");
 const password = ref("");
+const post = ref(null);
+async function fetchPost() {
+  try {
+    let response = await fetch('http://localhost:8000/api/user',{
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    username:username.value,
+    email:email.value,
+    password:password.value,
+
+    })
+});
+    post.value = await response.json();
+     router.push('/')
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
 
 
 </script>
@@ -41,7 +63,7 @@ const password = ref("");
 
 
 
-            <button type="submit" class="btn"> Create Account</button>
+            <button type="submit" @click="fetchPost"  class="btn"> Create Account</button>
           </form>
 
 
