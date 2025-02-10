@@ -1,5 +1,4 @@
-import mongoose, { disconnect } from "mongoose";
-import { Product } from "./Productschema";
+import mongoose from "mongoose";
 // Define a schema for billing
 const Billing = new mongoose.Schema({
   
@@ -12,8 +11,8 @@ const Billing = new mongoose.Schema({
         },
       ],    totalbill:{type:Number,required:true}, 
     createdAt: { type: Date, default: Date.now },
-    discount:{type:Number,required:true},
-    tax:{type:Number,required:true},
+    discount:{type:Number},
+    tax:{type:Number},
 });
 
 // Create a model

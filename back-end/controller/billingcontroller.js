@@ -1,10 +1,8 @@
-
-import { BillModel } from "../models/Bill.js";
-import { Product } from "../models/Productschema.js";
-
+import { BillModel } from "../models/Billingschema.js";
+import { Product, productModel } from "../models/Productschema.js";
 
 //  Create a Bill
-export const create= async (req, res) => {
+export const create=async (req, res) => {
   try {
     const { username, products, discount, tax } = req.body;
 
@@ -16,31 +14,37 @@ export const create= async (req, res) => {
     let productDetails = [];
 
     for (let item of products) {
-      const product = await Product.findOne({ itemname: item.itemname });
+      const product = await productModel.findById(item.productId).exec();
 
       if (!product) {
-        return res.status(404).json({ message: `Product ${item.itemname} not found` });
+        return res.status(404).json({ message: `Product with ID ${item.productId} not found` });
+      }
+
+      if (!item.quantity || item.quantity <= 0) {
+        return res.status(400).json({ message: `Invalid quantity for product ${product.itemname}` });
       }
 
       const productPrice = product.sellingprice * item.quantity;
+
+      if (isNaN(productPrice)) {
+        return res.status(500).json({ message: `Error calculating price for ${product.itemname}` });
+      }
+
       totalBill += productPrice;
 
       productDetails.push({
+        productId: product.id,
         itemname: product.itemname,
         quantity: item.quantity,
         price: product.sellingprice,
       });
     }
 
-    // Apply discount
-    const discountAmount = (totalBill * discount) / 100;
-    totalBill -= discountAmount;
 
-    // Apply tax
-    const taxAmount = (totalBill * tax) / 100;
-    totalBill += taxAmount;
+    if (isNaN(totalBill) || totalBill < 0) {
+      return res.status(500).json({ message: "Error calculating total bill amount" });
+    }
 
-    // Create a new bill
     const newBill = new BillModel({
       username,
       products: productDetails,
@@ -50,22 +54,23 @@ export const create= async (req, res) => {
     });
 
     await newBill.save();
-    res.status(201).json({ message: "Bill created successfully", bill: newBill });
+    res.status(201).json({ message: " Bill created successfully", bill: newBill });
   } catch (error) {
-    console.error("Error creating bill:", error);
+    console.error(" Error creating bill:", error);
     res.status(500).json({ message: "Server error" });
   }
-});
+};
 
-// 📌 Get All Bills
-router.get("/", async (req, res) => {
+
+
+// Get All Bills
+export const getbill= async (req, res) => {
   try {
-    const bills = await BillModel.find().sort({ createdAt: -1 }); // Sort by latest
+    const bills = await BillModel.find().sort({ createdAt: -1 }); 
     res.json(bills);
   } catch (error) {
     console.error("Error fetching bills:", error);
     res.status(500).json({ message: "Server error" });
   }
-});
+};
 
-export default router;

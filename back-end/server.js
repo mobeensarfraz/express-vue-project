@@ -5,7 +5,6 @@ import mongoose from 'mongoose';
 import Bill from './router/bill.js';
 import cors from 'cors';
 
-const axios = require('axios');
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://mobeensarfrazahmad:YMeLluYFJYhA7RH9@cluster0.yku5r.mongodb.net/shop', {
   useNewUrlParser: true,
