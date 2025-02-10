@@ -7,7 +7,7 @@ export const Product = new mongoose.Schema({
   purchaseprice: { type: Number, required: true, },
   sellingprice: { type: Number, required:true },
   iteminstock:{type:Number},
-  itempicturenumber:{type: String,required:true},
+  itempicturenumber:{type:String, required:true},
 
 
 });

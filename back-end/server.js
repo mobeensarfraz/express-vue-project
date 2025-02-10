@@ -1,7 +1,11 @@
 import express from 'express';
 import user from './router/user.js';
+import product from './router/product.js';
 import mongoose from 'mongoose';
-import cors from 'cors'
+import Bill from './router/bill.js';
+import cors from 'cors';
+
+const axios = require('axios');
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://mobeensarfrazahmad:YMeLluYFJYhA7RH9@cluster0.yku5r.mongodb.net/shop', {
   useNewUrlParser: true,
@@ -24,7 +28,9 @@ app.use(cors())
 //app.use (express.static(path.join(__dirname,'public')));
  //router
 app.get('/',(req,res)=>{
-  res.send({ststus:'ok'})
+  res.send({status:'ok'})
 })
  app.use('/api/user',user);
+ app.use('/api/product',product)
+ app.use('/api/billing',Bill)
 app.listen(port, () => console.log(`server running on port ${port}`));
