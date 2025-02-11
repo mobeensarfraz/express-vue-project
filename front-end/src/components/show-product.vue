@@ -36,6 +36,19 @@ async function deleteProduct(itemname) {
     errorMessage.value = "Failed to delete product. Please try again.";
   }
 }
+// Function to add product to cart
+function addToCart(product) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let existingProduct = cart.find(item => item.itemname === product.itemname);
+  if (existingProduct) {
+    existingProduct.quantity += 1;
+  } else {
+    cart.push({ ...product, quantity: 1 });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
 
 onMounted(fetchProduct);
 </script>
@@ -54,6 +67,7 @@ onMounted(fetchProduct);
           <th>Picture</th>
           <th>Edit</th>
           <th>Delete</th>
+          <th>cart</th>
         </tr>
       </thead>
       <tbody>
@@ -69,6 +83,10 @@ onMounted(fetchProduct);
 </RouterLink>
 </td>
           <td><button class="btn delete" @click="deleteProduct(product.itemname)">Delete</button></td>
+          <td>
+            <button class="btn add-to-cart" @click="addToCart(product)">Add to Cart</button>
+          </td>
+
         </tr>
       </tbody>
     </table>

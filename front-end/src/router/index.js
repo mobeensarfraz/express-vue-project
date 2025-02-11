@@ -5,6 +5,7 @@ import Home from '@/components/home.vue';
 import ProductForm from '@/components/product-form.vue';
 import ShowProduct from '@/components/show-product.vue';
 import Eidtproduct from '@/components/eidtproduct.vue';
+import Billling from '@/components/billling.vue';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL??"http://localhost:5173"),
     routes: [
@@ -37,6 +38,11 @@ const router = createRouter({
       path: "/editproduct/:itemname",
        name: 'eidtproduct',
       component: Eidtproduct,
+    },
+    {
+      path: "/billing",
+       name: 'billing',
+      component: Billling,
     },
   ],
 });

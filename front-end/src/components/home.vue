@@ -17,6 +17,8 @@ const userStore = useUserStore();
 
         <div class="right-box-home">
           <p style="text-align: center; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Billing</p>
+          <RouterLink   to="/billing"> <button type="submit" h class="btn">show bill</button></RouterLink>
+
         </div>
       </div>
       </div>

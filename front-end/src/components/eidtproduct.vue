@@ -2,6 +2,8 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
+import backgroundImage from '@/assets/img/background.jpg';
+
 
 export default {
   setup() {
@@ -33,13 +35,15 @@ export default {
 
     onMounted(fetchProduct);
 
-    return { product, updateProduct };
+    return { product, updateProduct, backgroundImage };
   },
+
 };
 </script>
 
 <template>
-<div class="form-card-pro">
+  <div class="image" :style="{ backgroundImage: `url(${backgroundImage})`}">
+    <div class="form-card-pro  " >
 
 <h1 style="text-align: center; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;"> Update PRODUCTS IN FRESHhut </h1>
 <h2 style="text-align: left; padding: 10PX;"> update Product</h2>
@@ -66,8 +70,20 @@ export default {
 
 
 </div>
+  </div>
 </template>
 
 
 <style>
+.image{
+
+min-height: 95vh;
+background-size: cover;
+background-position: center;
+padding-top: 10px;
+border-radius: 12px;
+}
+
+
+
 </style>
