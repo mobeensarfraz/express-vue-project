@@ -1,8 +1,15 @@
 <script setup>
 import { useUserStore } from '@/stores/userstore';
 import { RouterLink } from 'vue-router';
+import { onMounted} from 'vue';
+import router from '@/router';
 
 const userStore = useUserStore();
+onMounted(() => {
+  if (!userStore.user) {
+    router.push('/sign-up'); // Redirect to signup if user is not logged in
+  }
+});
 
 </script>
 <template>

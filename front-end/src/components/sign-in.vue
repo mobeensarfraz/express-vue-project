@@ -32,11 +32,15 @@ const data = await response.json();
       router.push("/home");
 
     } else {
-      errorMessage.value = data.message || "Login failed!";
+      errorMessage.value = data.message || "login fail";
+      alert(errorMessage.value);
+
     }
   } catch (error) {
     console.error('Error:', error);
-    errorMessage.value = "Network error. Please try again.";
+    errorMessage.value = "Invalid username or password! .";
+    alert(errorMessage.value);
+
   }
 }
 
@@ -60,11 +64,10 @@ const data = await response.json();
             <div class="form-group">
               <input v-model="username" type="text" placeholder="Enter your username" />
             </div>
-
-
             <div class="form-group">
               <input v-model="password" type="password" placeholder="Enter your password" />
             </div>
+
             <div class="form-group remember-me">
               <input type="checkbox" v-model="rememberMe" id="rememberMe" />
               <label for="rememberMe">Remember Me</label>

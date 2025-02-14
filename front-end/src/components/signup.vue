@@ -7,6 +7,8 @@ const username = ref("");
 const email = ref("");
 const password = ref("");
 const post = ref(null);
+const errorMessage = ref(null);
+
 async function fetchPost() {
   try {
     let response = await fetch('http://localhost:8000/api/user',{
@@ -25,6 +27,8 @@ async function fetchPost() {
      router.push('/')
   } catch (error) {
     console.error('Error:', error);
+    errorMessage.value = "create an account successfully.";
+    alert(errorMessage.value);
   }
 }
 

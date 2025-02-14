@@ -4,7 +4,6 @@ import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 import backgroundImage from '@/assets/img/background.jpg';
 
-
 export default {
   setup() {
     const route = useRoute();
@@ -35,6 +34,7 @@ export default {
 
     onMounted(fetchProduct);
 
+
     return { product, updateProduct, backgroundImage };
   },
 
@@ -42,6 +42,7 @@ export default {
 </script>
 
 <template>
+
   <div class="image" :style="{ backgroundImage: `url(${backgroundImage})`}">
     <div class="form-card-pro  " >
 
