@@ -13,18 +13,18 @@ const errorMessage = ref(null);
 
 async function fetchPost() {
   try {
-    let response = await fetch('http://localhost:8000/api/user/login',{
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    username:username.value,
-    password:password.value,
+    let response = await fetch('http://localhost:8000/api/user/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: username.value,
+        password: password.value,
 
-    })
-});
-const data = await response.json();
+      })
+    });
+    const data = await response.json();
 
     if (response.ok) {
       userStore.setUser(data);
@@ -48,16 +48,17 @@ const data = await response.json();
 
 </script>
 <template>
-  <div class="image" :style="{ backgroundImage: `url(${backgroundImage})`}">
-  <div class="content-box" >
-    <div class="left-box">
-      <div class="form-card">
+  <div class="image" :style="{ backgroundImage: `url(${backgroundImage})` }">
+    <div class="content-box">
+      <div class="left-box">
+        <div class="form-card">
 
-          <h1 style="text-align: center; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;">FRESHhut</h1>
+          <h1 style="text-align: center; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;">
+            FRESHhut</h1>
           <h2 style="text-align: left;">Sign In</h2>
           <p style="text-align: left;" class="signup-link">
             Don't have an account?
-           <router-link to="/sign-up">signup</router-link>
+            <router-link to="/sign-up">signup</router-link>
           </p>
 
           <form @submit.prevent="handleSubmit">
@@ -71,7 +72,7 @@ const data = await response.json();
             <div class="form-group remember-me">
               <input type="checkbox" v-model="rememberMe" id="rememberMe" />
               <label for="rememberMe">Remember Me</label>
-              <p class="forgetlink">              <a href="#">forget  password</a>
+              <p class="forgetlink"> <a href="#">forget password</a>
               </p>
 
             </div>
@@ -89,21 +90,20 @@ const data = await response.json();
         <h2>FRESHhut</h2>
         <p><b> This is the platform where you can get the products which you can use in daily routine........</b> </p>
       </div>
-  </div>
+    </div>
   </div>
 </template>
 
 
 
 <style>
-
-.image{
+.image {
 
   min-height: 95vh;
   background-size: cover;
-background-position: center;
-padding-top: 10px;
-border-radius: 12px;
+  background-position: center;
+  padding-top: 10px;
+  border-radius: 12px;
 }
 
 
@@ -125,14 +125,14 @@ border-radius: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
- color: rgb(7, 7, 7);
- border-radius: 12px;
+  color: rgb(7, 7, 7);
+  border-radius: 12px;
 
 
 }
 
 .form-card {
-  padding:10px;
+  padding: 10px;
   width: 100%;
   max-width: 300px;
   text-align: center;
@@ -148,7 +148,7 @@ border-radius: 12px;
   text-align: center;
   border: 2px solid rgb(236, 232, 232);
   padding: 20px;
-  color:rgb(46, 30, 30);
+  color: rgb(46, 30, 30);
 
 }
 
@@ -195,6 +195,7 @@ input {
 .signup-link a:hover {
   text-decoration: underline;
 }
+
 .forgetlink {
   margin-top: 10px;
   font-size: 14px;
@@ -223,6 +224,4 @@ input {
 
 
 }
-
-
 </style>

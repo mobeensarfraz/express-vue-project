@@ -14,8 +14,8 @@ const searchQuery = ref("");
 const products = ref([]);
 const selectedProduct = ref(null);
 const quantity = ref(1);
-const username=ref("");
-const userStore=useUserStore();
+const username = ref("");
+const userStore = useUserStore();
 
 const fetchProducts = async () => {
   try {
@@ -83,7 +83,7 @@ const submitBill = async () => {
       alert("Bill generated successfully!");
       localStorage.removeItem("cart");
       cart.value = [];
-      username.value="";
+      username.value = "";
       showBill.value = false;
     }
   } catch (error) {
@@ -114,54 +114,57 @@ onMounted(() => {
 </script>
 
 <template>
-    <div v-if="userStore.user">
 
-    <div class="image" :style="{ backgroundImage: `url(${backgroundImage})`}">
 
-  <div class="box">
-    <h1>Billing Information</h1>
-  </div>
+  <div class="parent image" :style="{ backgroundImage: `url(${backgroundImage})` }">
 
-  <div class="main-box">
-    <table v-if="cart.length > 0">
-      <thead>
-        <tr>
-          <th>Product Name</th>
-          <th>Quantity</th>
-          <th>Price</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="product in cart" :key="product._id">
-          <td>{{ product.itemname }}</td>
-          <td>{{ product.quantity }}</td>
-          <td>${{ product.sellingprice * product.quantity }}</td>
-          <td>
-            <button @click="deleteFromCart(product._id)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <p v-else>No products in cart.</p>
-  </div>
+    <div class="box">
+      <h1>Billing Information</h1>
+    </div>
 
-  <div class="container-bill">
-    <h2>Bill Summary</h2>
-    <label>Customer Name:
-      <input type="text" v-model="username">
-    </label>
+    <div class="main-box">
+      <table v-if="cart.length > 0">
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="product in cart" :key="product._id">
+            <td>{{ product.itemname }}</td>
+            <td>{{ product.quantity }}</td>
+            <td>${{ product.sellingprice * product.quantity }}</td>
+            <td>
+              <button @click="deleteFromCart(product._id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p v-else>No products in cart.</p>
+    </div>
 
-    <div class="search-bar">
-      <label>Search Product:
+    <div class="container-bill">
+      <h2>Bill Summary</h2>
+
+      <div class="input-parent">
+        <label for="username">Customer Name:</label>
+        <input name="username" type="text" v-model="username">
+      </div>
+
+
+      <div class="input-parent">
+        <label>Search Product:</label>
         <input type="text" v-model="searchQuery" placeholder="Search product">
-      </label>
-      <ul v-if="searchQuery && filteredProducts.length > 0" class="search-results">
-  <li v-for="product in filteredProducts" :key="product._id"
-      @click="selectProduct(product)">
-    {{ product.itemname }} - ${{ product.sellingprice }}
-  </li>
-</ul>
+        <ul v-if="searchQuery && filteredProducts.length > 0" class="search-results">
+          <li v-for="product in filteredProducts" :key="product._id" @click="selectProduct(product)">
+            {{ product.itemname }} - ${{ product.sellingprice }}
+          </li>
+        </ul>
+      </div>
+
 
 
       <label>Quantity:
@@ -174,19 +177,25 @@ onMounted(() => {
         <input type="number" v-model="tax" @input="calculateTotal">
       </label>
       <button class="btn add-to-cart" @click="addToCart">Add to Cart</button>
+
+
+      <p><strong>Subtotal:</strong> ${{ totalBill }}</p>
+      <p><strong>Total Bill:</strong> ${{ totalBill }}</p>
+      <button class="btn" @click="submitBill">Submit Bill</button>
     </div>
 
-    <p><strong>Subtotal:</strong> ${{ totalBill }}</p>
-    <p><strong>Total Bill:</strong> ${{ totalBill }}</p>
-    <button class="btn" @click="submitBill">Submit Bill</button>
+    <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
   </div>
 
-  <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
-  </div>
-  </div>
 </template>
 
 <style>
+.parent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
 
 .search-results {
   list-style-type: none;
@@ -209,41 +218,36 @@ onMounted(() => {
 }
 
 .box {
-  position: fixed;
-  top: 0;
-  margin-top: 5px;
-  width: 80%;
   background: rgba(207, 207, 207, 0.7);
   color: black;
   text-align: center;
   padding: 15px;
-  margin-left: 100px;
-  z-index: 1000;
-  position: fixed;
   border: 1px solid black;
 }
 
 .main-box {
   display: flex;
-  width: 82%;
   justify-content: center;
-  height: 37.5vh;
   text-align: center;
-  margin-top: 110px;
-  margin-left: 100px;
   background: rgba(207, 207, 207, 0.7);
-  position: fixed;
 }
 
 .container-bill {
-  position: fixed;
-  bottom: 0;
-  margin-left: 100px;
-  width: 81%;
-  margin-bottom: 10px;
   background: rgba(207, 207, 207, 0.7);
   color: black;
   border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
 }
 
+.input-parent {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.input-parent input {
+  max-width: 50%;
+}
 </style>
