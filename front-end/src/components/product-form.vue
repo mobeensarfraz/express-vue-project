@@ -32,7 +32,7 @@ async function fetchPost() {
 
     if (response.ok) {
       post.value = await response.json();
-      alert("Product added successfully!"); 
+      alert("Product added successfully!");
       itemname.value = "";
       purchaseprice.value = "";
       sellingprice.value = "";

@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import axios from "axios";
-import backgroundImage from "@/assets/img/background.jpg"
 import { useUserStore } from "@/stores/userstore";
 import router from "@/router";
 const cart = ref(JSON.parse(localStorage.getItem("cart")) || []);
@@ -34,10 +33,23 @@ const calculateTotal = () => {
 };
 
 const deleteFromCart = (productId) => {
-  cart.value = cart.value.filter(product => product._id !== productId);
-  localStorage.setItem("cart", JSON.stringify(cart.value));
+  let storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let productIndex = storedCart.findIndex(product => product._id === productId);
+
+  if (productIndex !== -1) {
+    if (storedCart[productIndex].quantity > 1) {
+      storedCart[productIndex].quantity -= 1; // Decrease quantity by 1
+    } else {
+      storedCart.splice(productIndex, 1); // Remove product if quantity is 1
+    }
+  }
+
+  localStorage.setItem("cart", JSON.stringify(storedCart));
+  cart.value = storedCart;
   calculateTotal();
 };
+
 
 const addToCart = () => {
   if (!selectedProduct.value) {
@@ -116,7 +128,7 @@ onMounted(() => {
 <template>
 
 
-  <div class="parent image" :style="{ backgroundImage: `url(${backgroundImage})` }">
+  <div class="parent " >
 
     <div class="box">
       <h1>Billing Information</h1>
@@ -166,16 +178,18 @@ onMounted(() => {
       </div>
 
 
-
-      <label>Quantity:
+<div class="input-parent">
+      <label>Quantity:</label>
         <input type="number" v-model="quantity" min="1">
-      </label>
-      <label>Discount (%):
+</div>
+<div class="input-parent">
+      <label>Discount (%):</label>
         <input type="number" v-model="discount" @input="calculateTotal">
-      </label>
-      <label>Tax (%):
+      </div>
+      <div class="input-parent">
+      <label>Tax (%):</label>
         <input type="number" v-model="tax" @input="calculateTotal">
-      </label>
+      </div>
       <button class="btn add-to-cart" @click="addToCart">Add to Cart</button>
 
 
@@ -198,13 +212,16 @@ onMounted(() => {
 }
 
 .search-results {
-  list-style-type: none;
-  background: rgba(207, 207, 207, 0.7);
+list-style-type: none;
+  background: white;
   border: 1px solid #ccc;
-  padding: 0;
+  padding: 20px;
   max-height: 150px;
   overflow-y: auto;
   position: absolute;
+  right: 0;
+  margin-top: 40px;
+  margin-right: 400px;
   width: 200px;
 }
 
@@ -214,7 +231,7 @@ onMounted(() => {
 }
 
 .search-results li:hover {
-  background-color: #f0f0f0;
+  background-color: #dcd1f1;
 }
 
 .box {
@@ -249,5 +266,13 @@ onMounted(() => {
 
 .input-parent input {
   max-width: 50%;
+}
+.btn{
+  padding: 10px;
+  background: rgba(27, 27, 27, 0.7);
+  color: rgb(253, 253, 253);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
 }
 </style>

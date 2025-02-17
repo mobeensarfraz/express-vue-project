@@ -7,7 +7,7 @@ import router from '@/router';
 const userStore = useUserStore();
 onMounted(() => {
   if (!userStore.user) {
-    router.push('/sign-up'); // Redirect to signup if user is not logged in
+    router.push('/sign-up');
   }
 });
 
@@ -35,11 +35,10 @@ onMounted(() => {
   display: flex;
   flex: 1;
   width: 80%;
-  border: 2px solid white;
   box-shadow: inset;
   border-radius: 12px;
   margin: 100px;
-  background: rgba(245, 243, 245, 0.911);
+  background: rgba(207, 207, 207, 0.2);
 }
 .left-box-home{
 

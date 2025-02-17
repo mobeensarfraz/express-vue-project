@@ -1,8 +1,8 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useUserStore } from "@/stores/userstore";
 import axios from "axios";
-import backgroundImage from '@/assets/img/background.jpg';
 
 export default {
   setup() {
@@ -10,7 +10,7 @@ export default {
     const router = useRouter();
     const product = ref({});
     const apiUrl = `http://localhost:8000/api/product/${route.params.itemname}`;
-
+const userStore=useUserStore();
 
     async function fetchProduct() {
       try {
@@ -32,10 +32,13 @@ export default {
       }
     }
 
-    onMounted(fetchProduct);
+    onMounted(fetchProduct,() => {
+  if (!userStore.user) {
+    router.push('/sign-up');
+  }
+});
 
-
-    return { product, updateProduct, backgroundImage };
+    return { product, updateProduct };
   },
 
 };
@@ -43,7 +46,6 @@ export default {
 
 <template>
 
-  <div class="image" :style="{ backgroundImage: `url(${backgroundImage})`}">
     <div class="form-card-pro  " >
 
 <h1 style="text-align: center; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;"> Update PRODUCTS IN FRESHhut </h1>
@@ -71,7 +73,6 @@ export default {
 
 
 </div>
-  </div>
 </template>
 
 

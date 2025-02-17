@@ -43,7 +43,7 @@ async function deleteProduct(itemname) {
 onMounted(fetchProduct);
 onMounted(() => {
   if (!userStore.user) {
-    router.push('/sign-up'); 
+    router.push('/sign-up');
   }
 });
 
@@ -65,7 +65,7 @@ onMounted(() => {
           <th>Picture</th>
           <th>Edit</th>
           <th>Delete</th>
-        
+
         </tr>
       </thead>
       <tbody>
