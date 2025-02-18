@@ -2,9 +2,9 @@ import express from 'express';
 import user from './router/user.js';
 import product from './router/product.js';
 import mongoose from 'mongoose';
+import multer from 'multer';
 import Bill from './router/bill.js';
-import cors from 'cors';
-
+import cors from 'cors'
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://mobeensarfrazahmad:YMeLluYFJYhA7RH9@cluster0.yku5r.mongodb.net/shop', {
   useNewUrlParser: true,
