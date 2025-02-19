@@ -14,7 +14,13 @@ async function fetchProduct() {
     if (!response.ok) {
       throw new Error("Failed to fetch products");
     }
-    products.value = await response.json();
+    let data = await response.json();
+    // Append full image URL
+    products.value = data.map(product => ({
+      ...product,
+      imageUrl: product.itempicturenumber ? `http://localhost:8000/uploads/${product.itempicturenumber}` : null
+    }));
+
   } catch (error) {
     console.error("Error fetching products:", error);
     errorMessage.value = "Failed to load products. Please try again.";
@@ -74,8 +80,10 @@ onMounted(() => {
           <td>{{ product.purchaseprice }}</td>
           <td>{{ product.sellingprice }}</td>
           <td>{{ product.iteminstock }}</td>
-          <td>{{ product.itempicturenumber }}</td>
-         <td>
+<td>
+  <img v-if="product.imageUrl" :src="product.imageUrl" alt="Product Image" class="product-image" />
+  <span v-else>No Image</span>
+</td>         <td>
           <RouterLink :to="`/editproduct/${product.itemname}`">
   <button class="btn">Edit</button>
 </RouterLink>
@@ -93,6 +101,13 @@ onMounted(() => {
 </template>
 
 <style>
+.product-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
 .container {
   width: 80%;
   margin: auto;

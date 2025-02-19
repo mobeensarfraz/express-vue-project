@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-
 // Define a schema for products
 export const Product = new mongoose.Schema({
   

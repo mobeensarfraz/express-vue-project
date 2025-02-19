@@ -10,44 +10,48 @@ const itemname = ref("");
 const purchaseprice = ref("");
 const sellingprice = ref("");
 const iteminstock = ref("");
-const itempicturenumber = ref("");
+const selectedFile = ref(null);
 const post = ref(null);
 const errorMessage = ref(null);
 
-async function fetchPost() {
+const handleFileSelect = (event) => {
+  selectedFile.value = event.target.files[0];
+};
+
+const fetchPost = async () => {
+  if (!selectedFile.value) {
+    alert("Please select an image file.");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('itemname', itemname.value);
+  formData.append('purchaseprice', purchaseprice.value);
+  formData.append('sellingprice', sellingprice.value);
+  formData.append('iteminstock', iteminstock.value);
+  formData.append('image', selectedFile.value);
+
   try {
-    let response = await fetch('http://localhost:8000/api/product', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        itemname: itemname.value,
-        purchaseprice: purchaseprice.value,
-        sellingprice: sellingprice.value,
-        iteminstock: iteminstock.value,
-        itempicturenumber: itempicturenumber.value,
-      })
+    const response = await fetch("http://localhost:8000/api/product", {
+      method: "POST",
+      body: formData,
     });
 
-    if (response.ok) {
-      post.value = await response.json();
-      alert("Product added successfully!");
-      itemname.value = "";
-      purchaseprice.value = "";
-      sellingprice.value = "";
-      iteminstock.value = "";
-      itempicturenumber.value = "";
-    } else {
-      errorMessage.value = "Failed to add product. Please try again.";
+    if (!response.ok) {
+      const data = await response.json();
+      errorMessage.value = data.error || "Failed to add product. Please try again.";
       alert(errorMessage.value);
+      return;
     }
+
+    post.value = await response.json();
+    alert("Product added successfully!");
   } catch (error) {
-    console.error('Error:', error);
     errorMessage.value = "Network error. Please try again.";
     alert(errorMessage.value);
+    console.error(error);
   }
-}
+};
 
 onMounted(() => {
   if (!userStore.user) {
@@ -55,6 +59,7 @@ onMounted(() => {
   }
 });
 </script>
+
 
 <template>
   <div v-if="userStore.user">
@@ -65,7 +70,7 @@ onMounted(() => {
         </h1>
         <h2 style="text-align: left; padding: 10PX;">Create A New Product</h2>
 
-        <form @submit.prevent="fetchPost">
+        <form @submit.prevent="fetchPost" >
           <div class="form-group-pro">
             <input v-model="itemname" type="text" placeholder="Enter item name" required />
           </div>
@@ -76,10 +81,9 @@ onMounted(() => {
             <input v-model="sellingprice" type="number" placeholder="Enter selling price" required />
           </div>
           <div class="form-group-pro">
-            <input v-model="iteminstock" type="number" placeholder="Enter items in stock" required />
-          </div>
-          <div class="form-group-pro">
-            <input v-model="itempicturenumber" type="text" placeholder="Enter item picture number" required />
+            <input v-model="iteminstock" type="number" placeholder="Enter items in stock" required /></div>
+            <div class="form-group-pro">
+            <input type="file" accept=".jpg,.jpeg" @change="handleFileSelect" />
           </div>
           <button type="submit" class="btn-pro">Add Product</button>
         </form>
