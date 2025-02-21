@@ -74,3 +74,25 @@ export const getbill= async (req, res) => {
   }
 };
 
+//delete bill by username
+export const deletebill = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    const deletedbill = await BillModel.findOneAndDelete({ username });
+
+    if (!deletedbill) {
+      return res.status(404).json({ message: "Bill not found" });
+    }
+
+    res.status(200).json({
+      message: "bill deleted successfully",
+      bill: deletedbill,
+    });
+  } catch (err) {
+    console.error("Error deleting  Bill:", err.message);
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: err.message });
+  }
+};

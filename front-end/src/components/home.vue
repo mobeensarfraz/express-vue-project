@@ -24,7 +24,8 @@ onMounted(() => {
 
         <div class="right-box-home">
           <p style="text-align: center; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Billing</p>
-          <RouterLink   to="/billing"> <button type="submit" h class="btn">show bill</button></RouterLink>
+          <RouterLink   to="/billing"> <button type="submit" class="btn">show bill</button></RouterLink>
+          <RouterLink   to="/showbill"> <button type="submit"  class="btn">show ALL billS</button></RouterLink>
 
         </div>
       </div>

@@ -6,7 +6,7 @@ import ProductForm from '@/components/product-form.vue';
 import ShowProduct from '@/components/show-product.vue';
 import Eidtproduct from '@/components/eidtproduct.vue';
 import Billling from '@/components/billling.vue';
-import { useUserStore } from '@/stores/userstore';
+import ShowBill from '@/components/show-bill.vue';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL??"http://localhost:5173"),
     routes: [
@@ -51,6 +51,13 @@ const router = createRouter({
       path: "/billing",
        name: 'billing',
       component: Billling,
+      meta: { requiresAuth: true }
+
+    },
+    {
+      path: "/showbill",
+       name: 'showbill',
+      component: ShowBill,
       meta: { requiresAuth: true }
 
     },

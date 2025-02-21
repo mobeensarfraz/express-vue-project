@@ -3,7 +3,7 @@ import { create, deleteproduct, getproducts, postproductBynameorId, updateProduc
 
 const router = express.Router();
 
-// POST /api/product - create a product with an image upload
+// POST 
 router.post('/', create);
 
 // Other routes (update, get, delete)

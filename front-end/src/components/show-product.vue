@@ -15,10 +15,9 @@ async function fetchProduct() {
       throw new Error("Failed to fetch products");
     }
     let data = await response.json();
-    // Append full image URL
     products.value = data.map(product => ({
       ...product,
-      imageUrl: product.itempicturenumber ? `http://localhost:8000/uploads/${product.itempicturenumber}` : null
+      imageUrl: product.itempicturenumber ? `http://localhost:8000/uploads/images/${product.itempicturenumber}` : null
     }));
 
   } catch (error) {
@@ -104,8 +103,9 @@ onMounted(() => {
 .product-image {
   width: 50px;
   height: 50px;
-  object-fit: cover;
-  border-radius: 5px;
+  object-fit: contain;
+  border-radius: 1px;
+  background: rgba(207, 207, 207, 0.7);
 }
 
 .container {
