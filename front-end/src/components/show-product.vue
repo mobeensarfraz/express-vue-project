@@ -84,7 +84,7 @@ onMounted(() => {
   <span v-else>No Image</span>
 </td>         <td>
           <RouterLink :to="`/editproduct/${product.itemname}`">
-  <button class="btn">Edit</button>
+  <button class="btn">Update</button>
 </RouterLink>
 </td>
           <td><button class="btn delete" @click="deleteProduct(product.itemname)">Delete</button></td>

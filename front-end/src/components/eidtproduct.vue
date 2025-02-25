@@ -12,6 +12,7 @@ export default {
     const apiUrl = `http://localhost:8000/api/product/${route.params.itemname}`;
 const userStore=useUserStore();
 
+
     async function fetchProduct() {
       try {
         const response = await axios.get(apiUrl);
@@ -65,8 +66,9 @@ const userStore=useUserStore();
     <input v-model="product.iteminstock" type="number" placeholder="update iteminstock" />
   </div>
       <div class="form-group-pro">
-    <input v-model="product.itempicturenumber" type="text" placeholder="update itempicturenumber" />
-  </div>
+
+        <input type="file" accept=".jpg,.jpeg" @change="handleFileSelect" />
+      </div>
   <button type="submit" class="btn-pro">Update product</button>
 
 </form>

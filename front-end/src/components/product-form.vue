@@ -72,16 +72,16 @@ onMounted(() => {
 
         <form @submit.prevent="fetchPost" >
           <div class="form-group-pro">
-            <input v-model="itemname" type="text" placeholder="Enter item name" required />
+            <input v-model="itemname" type="text" placeholder="Enter item name"  required />
           </div>
           <div class="form-group-pro">
-            <input v-model="purchaseprice" type="number" placeholder="Enter purchase price" required />
+            <input v-model="purchaseprice" type="number" placeholder="Enter purchase price"  required />
           </div>
           <div class="form-group-pro">
-            <input v-model="sellingprice" type="number" placeholder="Enter selling price" required />
+            <input v-model="sellingprice" type="number" placeholder="Enter selling price"  required />
           </div>
           <div class="form-group-pro">
-            <input v-model="iteminstock" type="number" placeholder="Enter items in stock" required /></div>
+            <input v-model="iteminstock" type="number" placeholder="Enter items in stock"  required /></div>
             <div class="form-group-pro">
             <input type="file" accept=".jpg,.jpeg" @change="handleFileSelect" />
           </div>
